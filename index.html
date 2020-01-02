@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Hello, world!</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+	<h1>Hello, world!</h1>
+    <div class="video-container">
+    <video id="myVideo" width="700" height="400" controls>
+     <source src="video.mp4" type="video/mp4" />
+   </video>
+</div>
+
+  </body>
+  
+  <script>
+    var currTime=0,vid;
+    vid = document.getElementById("myVideo");
+	
+	//tracking after evey pause
+    vid.addEventListener("pause", function() {
+      currTime=vid.currentTime;
+      //alert(currTime);
+	  localStorage.setItem('settingTime', currTime);
+	  //console.log(localStorage.getItem('settingTime'));
+	 
+   });
+   
+   //resetting after end
+    vid.addEventListener("ended", function() {
+      currTime=0;
+      //alert(currTime);
+	  localStorage.setItem('settingTime', currTime);
+	  //console.log(localStorage.getItem('settingTime'));
+	 
+   });
+  
+  //pause video when spacebar is clicked
+  
+  /*document.onkeypress = function(e) { 
+  if ( (e || window.event).keyCode === 32 ) 
+  { vid.paused ? vid.play() : vid.pause(); } 
+  };
+  */
+  
+  document.addEventListener("click", toggling);
+  
+  function toggling(){
+    vid.paused ? vid.play() : vid.pause();
+  }
+  
+   function init(){
+   //localStorage.clear();
+    document.getElementById("myVideo").addEventListener("loadedmetadata", function() {
+   this.currentTime = parseInt(localStorage.getItem('settingTime'));
+}, false);
+  }
+  
+  init();
+  
+  </script>
+  
+</html>
